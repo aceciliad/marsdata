@@ -2,15 +2,16 @@
 # -*- coding: utf-8 -*-
 
 #==========================================================================
-# Given a Martian sol (day after landing of InSight), obtain the time 
+# Given a Martian sol (day after landing of InSight), obtain the time
 # stamps that define the start and end of the sol, useful to download
 # data from IRIS
 #==========================================================================
 
 import numpy as np
 import os, argparse
-from datetime import datetime,timedelta
-from obspy import UTCDateTime
+import datetime
+from obspy.clients.fdsn import Client
+from obspy import UTCDateTime, read, read_inventory
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -46,7 +47,6 @@ def read_timestamp(id_data,
                       allow_pickle=True).item()
 
 
-    import ipdb; ipdb.set_trace()  # noqa
     return
 
 
@@ -58,13 +58,13 @@ def get_sol_start_end_utc(sol):
     sol_length_seconds = 88775.244
 
     # UTC start time of Sol 0
-    sol0_utc_datetime = datetime(2018, 11, 26, 5, 10, 50, 335080)
+    sol0_utc_datetime = datetime.datetime(2018, 11, 26, 5, 10, 50, 335080)
 
     # Calculate the start time of the given sol in UTC
-    sol_start_utc_datetime = sol0_utc_datetime + timedelta(seconds=sol*sol_length_seconds)
+    sol_start_utc_datetime = sol0_utc_datetime + datetime.timedelta(seconds=int(sol)*sol_length_seconds)
 
     # Calculate the end time of the given sol in UTC
-    sol_end_utc_datetime = sol_start_utc_datetime + timedelta(seconds=sol_length_seconds)
+    sol_end_utc_datetime = sol_start_utc_datetime + datetime.timedelta(seconds=sol_length_seconds)
 
     return UTCDateTime(sol_start_utc_datetime), UTCDateTime(sol_end_utc_datetime)
 
@@ -76,7 +76,6 @@ if __name__=='__main__':
 
     # To download raw waveforms and get event info:
     read_timestamp(id_data)
-
 
 
 
