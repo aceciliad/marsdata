@@ -66,7 +66,7 @@ def get_sol_start_end_utc(sol):
     # Calculate the end time of the given sol in UTC
     sol_end_utc_datetime = sol_start_utc_datetime + timedelta(seconds=sol_length_seconds)
 
-    return sol_start_utc_datetime, sol_end_utc_datetime
+    return UTCDateTime(sol_start_utc_datetime), UTCDateTime(sol_end_utc_datetime)
 
 
 if __name__=='__main__':
