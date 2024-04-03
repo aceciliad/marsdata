@@ -2,14 +2,15 @@
 # -*- coding: utf-8 -*-
 
 #==========================================================================
-# Download data and generate input file to run SeisGlitch
+# Given a Martian sol (day after landing of InSight), obtain the time 
+# stamps that define the start and end of the sol, useful to download
+# data from IRIS
 #==========================================================================
 
 import numpy as np
 import os, argparse
 from datetime import datetime,timedelta
-from obspy.clients.fdsn import Client
-from obspy import UTCDateTime, read, read_inventory
+from obspy import UTCDateTime
 
 import warnings
 warnings.filterwarnings("ignore")
